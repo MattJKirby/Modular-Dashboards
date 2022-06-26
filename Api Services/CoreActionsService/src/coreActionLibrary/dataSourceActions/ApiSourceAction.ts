@@ -3,7 +3,7 @@ import { IAction } from "../IAction"
 
 
 
-@ActionRegister.registerActionType("ApiSourceAction","Test")
+@ActionRegister.registerActionType("ApiSourceAction","/apiSource")
 export default class ApiSourceAction implements IAction {
 
     constructor(){
