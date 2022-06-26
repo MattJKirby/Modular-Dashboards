@@ -1,4 +1,5 @@
 import { IAction } from "../coreActionLibrary/IAction";
+import { ActionRegistrationFactory } from "./ActionRegistrationFactory";
 import { IRegisteredAction } from "./IRegisteredAction";
 import { RegisteredAction } from "./RegisteredAction";
 
@@ -16,14 +17,9 @@ export namespace ActionRegister {
     }
 
     /**
-     * Maintain a list of action types
-     */
-    const actionTypes: ActionConstructor<IAction>[] = [];
-
-    /**
      * Maintain a list of all registerd actions
      */
-    const registeredActions: IRegisteredAction<any>[] = [];
+    const registeredActions: IRegisteredAction<ActionConstructor<IAction>>[] = [];
 
     /**
      * Decorator function for registering an action type
@@ -33,20 +29,17 @@ export namespace ActionRegister {
      */
     export function registerActionType<ActionType extends ActionConstructor<IAction>> (typeName: string, endpoint: string) {
         return (ctor: ActionType) => {
-            console.log("Plugin found: " + endpoint);
-            actionTypes.push(ctor)
-            registeredActions.push(new RegisteredAction<ActionType>(typeName,ctor))
+            registeredActions.push(ActionRegistrationFactory.newRegistration<ActionType>(typeName, ctor, endpoint));
         }
     }
 
-    export const GetActionTypes = (): ActionConstructor<IAction>[] => {
-        console.log(actionTypes.length)
-        return actionTypes;
-    }
-
-    export const GetActions = (): IRegisteredAction<IAction>[] => {
+    /**
+     * Obtains a list of all registered actions
+     * @returns 
+     */
+    export const GetActions = (): IRegisteredAction<ActionConstructor<IAction>>[] => {
         return registeredActions;
     }
-  }
+}
 
 
