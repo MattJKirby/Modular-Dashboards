@@ -7,8 +7,11 @@ import { RegisteredAction } from "./RegisteredAction";
 export class ActionRegistrationFactory {
 
     public static newRegistration<ActionType>(actionTypeName: string, actionConstructor: ActionType, actionEndpoint: string): RegisteredAction<ActionType> {
-        console.log(ActionRegistrationFactory.validateUniqueActionEndpoint(actionEndpoint));
-        return new RegisteredAction<ActionType>(actionTypeName, actionConstructor, actionEndpoint);
+        return new RegisteredAction<ActionType>(
+            actionTypeName, 
+            actionConstructor, 
+            ActionRegistrationFactory.validateUniqueActionEndpoint(actionEndpoint)
+        );
     }
 
     private static validateUniqueActionEndpoint(actionEndpoint: string): string {
