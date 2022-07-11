@@ -15,7 +15,7 @@
     /**
      * Default action parameter.
      */
-    defaultValue: parameterType;
+    defaultValue: parameterType | null;
 
     /**
      * If a value for the parameter must be present.
