@@ -1,5 +1,5 @@
 /**
- * Defines common properties of all parameters on an action.
+ * Defines a an action parameter.
  */
 export type IActionParameter<parameterType> = {
     /**
@@ -8,27 +8,7 @@ export type IActionParameter<parameterType> = {
     name: string;
 
     /**
-     * Display friendly version of the action name.
-     */
-    displayName: string;
-
-    /**
      * Action parameter value.
      */
     value: parameterType;
-
-    /**
-     * Default action parameter.
-     */
-    defaultValue: parameterType;
-
-    /**
-     * If a value for the parameter must be present.
-     */
-    optional: boolean;
-
-    /**
-     * Allows the user to edit the parameter or not.
-     */
-    canEdit: boolean
 }
