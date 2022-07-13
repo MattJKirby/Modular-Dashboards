@@ -1,31 +1,25 @@
-import { IRegisteredActionParameter } from "../IRegisteredActionParameter";
+import { RegisteredActionParameter } from "../RegisteredActionParameter";
 import { BaseParameterOptions } from "../ParameterOptions/BaseParameterOptions";
 import { ActionParameterBase } from "./ActionParameterBase";
+import { PrimitiveTypes } from "./PrimitiveTypes";
 
-export class ActionParameterPrimitive<primitiveType> extends ActionParameterBase<primitiveType> {
+export class ActionParameterPrimitive extends ActionParameterBase {
 
-    private parameterType: string 
+    type: PrimitiveTypes
 
-    constructor(name: string, parameterType: string, parameterOptions: BaseParameterOptions<primitiveType>){
-        super(name, parameterOptions.displayName, parameterOptions.defaultValue, parameterOptions.optional, parameterOptions.canEdit);
-        this.parameterType = parameterType
-    
+    constructor(name: string, type: PrimitiveTypes, parameterOptions: BaseParameterOptions){
+        super(name, parameterOptions);
+        this.type = type;
         this.parameterTemplate = this.buildTemplate();
-    }
-
-    private assertDefaultValue = <primitiveType>(initialValue: primitiveType) => {
-        const defaultValue = this.parameterType == 'boolean'? false : initialValue
-        return defaultValue;     
     }
 
     /**
      * Extends the parameter template by overriding the buildTemplate method
      * @returns 
      */
-    protected buildTemplate = (): IRegisteredActionParameter<primitiveType> => {
+    protected override buildTemplate = (): RegisteredActionParameter<typeof this.type> => {
         const template = {
-            parameterType: this.parameterType,
-            defaultValue: this.assertDefaultValue(this.parameterTemplate.defaultValue)
+            type: this.type
         }
        return Object.assign(this.parameterTemplate, template);
     };
@@ -34,9 +28,8 @@ export class ActionParameterPrimitive<primitiveType> extends ActionParameterBase
      * Register the parameter by instantiating the parameter type with the parameter name and corresponding action parameter options.
      * @returns 
      */
-    public static register = <primitiveType>(parameterOptions: BaseParameterOptions<primitiveType>) => (target: any, propertyKey: string) => {
-        const parameter = Object.entries(new target.constructor).find(o => o[0] === propertyKey)
-        super.registerNewParameter(new ActionParameterPrimitive<primitiveType>(propertyKey, typeof parameter![1], parameterOptions));
+    public static register = (type: PrimitiveTypes, parameterOptions: BaseParameterOptions) => (target: any, propertyKey: string) => {
+        super.registerNewParameter(new ActionParameterPrimitive(propertyKey,type,parameterOptions));
     }
 }
 

@@ -1,35 +1,36 @@
 import { ActionRegister } from "../../actionRegistration/ActionRegister"
-import { IRegisteredActionParameter } from "../IRegisteredActionParameter";
+import { RegisteredActionParameter } from "../RegisteredActionParameter";
+import { BaseParameterOptions } from "../ParameterOptions/BaseParameterOptions";
 
 /**
  * Defines the properties for a generic action parameter
  */
-export abstract class ActionParameterBase<parameterType> {
+export abstract class ActionParameterBase {
     
    /**
     * Generic action parameter properties.
     */
-    private name: string
-    private displayName: string
-    private defaultValue: parameterType | null
-    private optional: boolean
-    private canEdit: boolean
+    protected name: string
+    protected displayName: string
+    protected defaultValue: any
+    protected optional: boolean
+    protected canEdit: boolean
     
     /**
      * Parameter template that can be extended by childeren of ActionParameterBase
      */
-    protected parameterTemplate: IRegisteredActionParameter<parameterType>
+    protected parameterTemplate: RegisteredActionParameter<any>
 
     /**
      * Construct the default action parameter.
      * This constructor also provides the default values for base action parameter properties.
      */
-    constructor(name: string, displayName: string = name, defaultValue: (parameterType | null) = null , optional: boolean = false, canEdit: boolean = false){
+    constructor(name: string, baseOptions: BaseParameterOptions){
         this.name = name;
-        this.displayName = displayName;
-        this.defaultValue = defaultValue;
-        this.optional = optional;
-        this.canEdit = canEdit;
+        this.displayName = baseOptions.displayName !== undefined ? baseOptions.displayName : this.name;
+        this.defaultValue = baseOptions.defaultValue !== undefined ? baseOptions.defaultValue : null;
+        this.optional = baseOptions.optional !== undefined ? baseOptions.optional : false;
+        this.canEdit = baseOptions.canEdit !== undefined ? baseOptions.canEdit : false;
         this.parameterTemplate = this.buildTemplate();
     }
 
@@ -37,15 +38,14 @@ export abstract class ActionParameterBase<parameterType> {
      * Returns a parameter template containing all the base action parameter properties.
      * @returns 
      */
-    protected buildTemplate = ():IRegisteredActionParameter<parameterType> => {
-        const test: IRegisteredActionParameter<parameterType> =  {
-            name: this.name,
-            displayName: this.displayName,
-            defaultValue: this.defaultValue,
-            optional: this.optional,
-            canEdit: this.canEdit
-        }
-        return test
+    protected buildTemplate = ():RegisteredActionParameter<any> => {
+        return new RegisteredActionParameter<any>(
+            this.name,
+            this.displayName,
+            this.defaultValue,
+            this.optional,
+            this.canEdit
+        )
     }
 
     /**
@@ -53,6 +53,6 @@ export abstract class ActionParameterBase<parameterType> {
      * @param actionParameter
      * @returns 
      */
-    protected static registerNewParameter = (parameter:ActionParameterBase<any>) => {ActionRegister.registerActionParameter(parameter.parameterTemplate)};
+    protected static registerNewParameter = (parameter:ActionParameterBase) => {ActionRegister.registerActionParameter(parameter.parameterTemplate)};
 
 }
