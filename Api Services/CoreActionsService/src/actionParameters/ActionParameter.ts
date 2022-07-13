@@ -1,20 +1,16 @@
-import { ActionRegister } from "../actionRegistration/ActionRegister"
 import { IActionParameter } from "./IActionParameter"
 
 /**
  * Contains the decoration function for registering a parameter on an action.
  */
-export class ActionParameter<parameterType> implements IActionParameter<parameterType>{
-    name: string
-    value: parameterType
+export class ActionParameter<T> implements IActionParameter{
+    Name: string
+    Value: T
+    HasValue: boolean
 
-    constructor(name: string, value: parameterType){
-        this.name = name;
-        this.value = value;
-    }
-
-  
-
-    
-    
+    constructor(name: string, value: T){
+        this.Name = name;
+        this.Value = value;
+        this.HasValue = this.Value != null;
+    } 
 }

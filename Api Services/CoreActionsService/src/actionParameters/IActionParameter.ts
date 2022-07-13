@@ -1,14 +1,19 @@
 /**
  * Defines a an action parameter.
  */
-export type IActionParameter<parameterType> = {
+export type IActionParameter = {
     /**
      * Action name.
      */
-    name: string;
+    Name: string;
 
     /**
      * Action parameter value.
      */
-    value: parameterType;
+    Value: any;
+
+    /**
+     * Checks if the parameter has a non-null value
+     */
+    HasValue: boolean;
 }
