@@ -1,6 +1,6 @@
 
 import { IAction } from "../coreActionLibrary/IAction";
-import { IRegisteredActionParameter } from "../parameterRegistration/IRegisteredActionParameter";
+import { RegisteredActionParameter } from "../parameterRegistration/RegisteredActionParameter";
 import { ActionRegistrationFactory } from "./ActionRegistrationFactory";
 import { IRegisteredAction } from "./IRegisteredAction";
 
@@ -18,7 +18,7 @@ export namespace ActionRegister {
     /**
      * List of all the parameters pertaining to the registered action.
      */
-    const actionParameters: IRegisteredActionParameter<any>[] = [];
+    const actionParameters: RegisteredActionParameter<any>[] = [];
     
     /**
      * Readonly action constructor type using generic
@@ -46,7 +46,7 @@ export namespace ActionRegister {
      * Registers action parameters
      * @param parameter 
      */
-    export const registerActionParameter = (parameter: IRegisteredActionParameter<any>) => {
+    export const registerActionParameter = (parameter: RegisteredActionParameter<any>) => {
         actionParameters.push(parameter)
     }
 

@@ -1,4 +1,4 @@
-import { IRegisteredActionParameter } from "../parameterRegistration/IRegisteredActionParameter";
+import { RegisteredActionParameter } from "../parameterRegistration/RegisteredActionParameter";
 
 /**
  * Determines what we expect from a registered action
@@ -10,5 +10,5 @@ export interface IRegisteredAction<ActionType> {
     preview: boolean;
     displayName: string;
     description: string;
-    registeredParameters: IRegisteredActionParameter<any>[];
+    registeredParameters: RegisteredActionParameter<any>[];
 }
