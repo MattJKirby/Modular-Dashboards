@@ -1,9 +1,9 @@
 /**
  * These properties define the optional configuration options available for every parameter.
  */
-export interface BaseParameterOptions<primitiveType> {
+export interface BaseParameterOptions {
     displayName?: string,
-    defaultValue?: primitiveType | null,
+    defaultValue?: any,
     optional?: boolean,
     canEdit?: boolean
 }
