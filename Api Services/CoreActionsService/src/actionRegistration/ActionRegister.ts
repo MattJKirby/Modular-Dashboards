@@ -1,12 +1,24 @@
+
 import { IAction } from "../coreActionLibrary/IAction";
+import { RegisteredActionParameter } from "../parameterRegistration/RegisteredActionParameter";
 import { ActionRegistrationFactory } from "./ActionRegistrationFactory";
 import { IRegisteredAction } from "./IRegisteredAction";
-import { RegisteredAction } from "./RegisteredAction";
+
 
 /**
  * Stores a list of all action types, ensuring they contains all info for successful registration.
  */
 export namespace ActionRegister {
+
+    /**
+     * Maintain a list of all registered actions
+     */
+     const registeredActions: IRegisteredAction<ActionConstructor<IAction>>[] = [];
+
+    /**
+     * List of all the parameters pertaining to the registered action.
+     */
+    const actionParameters: RegisteredActionParameter<any>[] = [];
     
     /**
      * Readonly action constructor type using generic
@@ -17,11 +29,6 @@ export namespace ActionRegister {
     }
 
     /**
-     * Maintain a list of all registerd actions
-     */
-    const registeredActions: IRegisteredAction<ActionConstructor<IAction>>[] = [];
-
-    /**
      * Decorator function for registering an action type
      * @param typeName 
      * @param endpoint 
@@ -29,8 +36,18 @@ export namespace ActionRegister {
      */
     export function registerActionType<ActionType extends ActionConstructor<IAction>> (typeName: string, endpoint: string) {
         return (ctor: ActionType) => {
-            registeredActions.push(ActionRegistrationFactory.newRegistration<ActionType>(typeName, ctor, endpoint));
+            const newRegistration = ActionRegistrationFactory.newRegistration<ActionType>(typeName, ctor, endpoint);
+            newRegistration.registeredParameters = actionParameters.splice(0, actionParameters.length);
+            registeredActions.push(newRegistration);
         }
+    }
+
+    /**
+     * Registers action parameters
+     * @param parameter 
+     */
+    export const registerActionParameter = (parameter: RegisteredActionParameter<any>) => {
+        actionParameters.push(parameter)
     }
 
     /**
