@@ -1,21 +1,26 @@
-import { RegisteredActionParameter } from "../parameterRegistration/RegisteredActionParameter";
-import { IRegisteredAction } from "./IRegisteredAction";
+import { ActionTemplate } from "../Templating/ActionTemplating/ActionTemplate";
+import { IActionTemplate } from "../Templating/ActionTemplating/IActionTemplate";
 
-export class RegisteredAction<ActionType> implements IRegisteredAction<ActionType> {
-    typeName: string;
-    actionType: ActionType;
-    endpoint: string;
-    preview: boolean;
-    displayName: string;
-    description: string;
-    registeredParameters: RegisteredActionParameter<any>[] = [];
 
-    constructor(typeName: string, actionType: ActionType, endpoint: string, preview: boolean = true, displayName: string = "Unnamed Action", desciption: string = ""){
-        this.typeName = typeName;
-        this.actionType = actionType;
-        this.endpoint = endpoint;
-        this.preview = preview;
-        this.displayName = displayName;
-        this.description = desciption;
+
+export class RegisteredAction<Type> {
+    
+    /** @inheritDoc */
+    TypeName: string;
+
+    /** @inheritDoc */
+    ActionType: Type;
+
+    /** @inheritDoc */
+    Endpoint: string;
+
+    /** @inheritDoc */
+    Template: IActionTemplate;
+
+    constructor(typeName: string, actionType: Type, endpoint: string){
+        this.TypeName = typeName;
+        this.ActionType = actionType;
+        this.Endpoint = endpoint;   
+        this.Template = new ActionTemplate(typeName)
     }
 }
