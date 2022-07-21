@@ -1,16 +1,16 @@
-import { ActionParameterPrimitive } from "../../parameterRegistration/ParameterTypes/ActionParameterPrimitive"
+import { ActionParameterPrimitive } from "../../Templating/ParameterTemplating/ParameterTypes/ActionParameterPrimitive"
 import { ActionRegister } from "../../actionRegistration/ActionRegister"
 import { Action } from "../Action"
-import { PrimitiveTypes } from "../../parameterRegistration/ParameterTypes/PrimitiveTypes";
+import { PrimitiveTypes } from "../../Templating/ParameterTemplating/ParameterTypes/PrimitiveTypes";
 import { IAction } from "../IAction";
 
 
 
 
-@ActionRegister.registerActionType("ApiSourceAction","/apiSource")
+@ActionRegister.registerAction("ApiSourceAction","/apiSource")
 export default class ApiSourceAction extends Action{
 
-    @ActionParameterPrimitive.register(PrimitiveTypes.STRING, {displayName: "my test action"})
+    @ActionParameterPrimitive.register(PrimitiveTypes.BOOLEAN)
     private test: string = this.getParameter<typeof this.test>("test","");
 
 
@@ -21,7 +21,6 @@ export default class ApiSourceAction extends Action{
 
     constructor(clone?: IAction){
         super(clone)
-        console.log(true, clone)
     }
 
  
