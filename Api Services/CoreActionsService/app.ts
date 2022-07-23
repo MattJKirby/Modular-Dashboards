@@ -19,13 +19,10 @@ const test = ActionRegister.GetActions()[0]
 const abc = new test.ActionType
 const abc2 = new test.ActionType
 
-abc.parameters[0].Value = "asdf"
 
 
+console.log(abc)
 
-
-
-console.log(test.Template)
 
 
   server.listen(0, ():void => {
