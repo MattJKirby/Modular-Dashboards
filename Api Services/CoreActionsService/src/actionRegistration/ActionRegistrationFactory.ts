@@ -1,3 +1,4 @@
+import { IActionTemplate } from "../Templating/ActionTemplating/IActionTemplate";
 import { ActionRegister } from "./ActionRegister";
 import { RegisteredAction } from "./RegisteredAction";
 
@@ -9,8 +10,8 @@ export class ActionRegistrationFactory {
     /**
      * Generate a new registered action.
      */
-    public static newRegistration<ActionType>(actionTypeName: string, actionConstructor: ActionType, actionEndpoint: string): RegisteredAction<ActionType> {
-        return new RegisteredAction<ActionType>(actionTypeName, actionConstructor, ActionRegistrationFactory.validateUniqueActionEndpoint(actionEndpoint));
+    public static newRegistration<ActionType>(actionTypeName: string, actionConstructor: ActionType, actionEndpoint: string, template: IActionTemplate): RegisteredAction<ActionType> {
+        return new RegisteredAction<ActionType>(actionTypeName, actionConstructor, ActionRegistrationFactory.validateUniqueActionEndpoint(actionEndpoint), template);
     }
 
     /**

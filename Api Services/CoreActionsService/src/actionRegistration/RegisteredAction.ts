@@ -17,10 +17,10 @@ export class RegisteredAction<Type> {
     /** @inheritDoc */
     Template: IActionTemplate;
 
-    constructor(typeName: string, actionType: Type, endpoint: string){
+    constructor(typeName: string, actionType: Type, endpoint: string, template: IActionTemplate){
         this.TypeName = typeName;
         this.ActionType = actionType;
         this.Endpoint = endpoint;   
-        this.Template = new ActionTemplate(typeName)
+        this.Template = template;
     }
 }

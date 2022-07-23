@@ -51,7 +51,7 @@ export abstract class ActionParameterBase<T extends ActionParameterBase<T>> {
      * @returns 
      */
     protected static registerNewParameter = <T extends ActionParameterBase<T>>(actionTypeName: string, parameter:ActionParameterBase<T>) => {
-        Templator.templateEntity(actionTypeName, parameter.buildTemplate());
+        Templator.getActionTemplator(actionTypeName).Parameters.templateEntity(parameter.buildTemplate());
     };
 
 }

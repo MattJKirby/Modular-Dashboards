@@ -19,7 +19,7 @@ export interface IActionTemplate {
     /**
      * Whether the action is in preview or not.
      */
-    preview: boolean,
+    Preview: boolean,
 
     /**
      * All templated parameters.

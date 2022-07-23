@@ -1,42 +1,34 @@
-import { ActionEntityTemplator } from "./ActionEntityTemplator";
-import { ITemplatedEntity } from "./IEntityTemplate";
+import { ActionTemplator } from "./ActionTemplator";
 
 export namespace Templator {
  
     /**
      * List of active entity templators.
      */
-    const entityTemplators: ActionEntityTemplator[] = [];
+    const actionTemplators: ActionTemplator[] = [];
 
-    /**
-     * Templates a new entity.
-     * @param entity 
-     */
-    export const templateEntity = <T extends ITemplatedEntity>(actionTypeName: string, entity:T): void => getOrCreateTemplator(actionTypeName).templateEntity(entity);
-
-    /**
-     * Get template by actionTypeName. Throws exception if no templator exists with that name
-     */
-    export const getTemplator = (actionTypeName: string): ActionEntityTemplator => {
-        const templator = entityTemplators.find(t => t.ActionTypeName === actionTypeName)
-        if(templator === undefined)
-            throw new Error(`Templator with type name ${actionTypeName} does not exist.`);
-
-        return templator;
+   /**
+    * Returns an action templator by the its associated ActionTypeName
+    * @param actionTypeName 
+    * @returns 
+    */
+    export const getActionTemplator = (actionTypeName: string): ActionTemplator => {
+        const existingTemplator = actionTemplators.find(t => t.ActionType === actionTypeName);
+        
+        if(existingTemplator === undefined)
+            actionTemplators.push(new ActionTemplator(actionTypeName));
+        
+        return existingTemplator || actionTemplators[actionTemplators.length -1];
     }
 
     /**
-     * Return templator that matches provided arg or create a new one and return
-     * @param actionTypeName 
+     * Decorator function to enable to user to specify if the action is in preview or not.
+     * @param isPreview 
      * @returns 
      */
-    const getOrCreateTemplator = (actionTypeName: string): ActionEntityTemplator => {
-        try{
-            return getTemplator(actionTypeName);
-        } catch (error){
-             //Create new templator if one does not exist with the specified actionTypeName
-            entityTemplators.push(new ActionEntityTemplator(actionTypeName));
-            return entityTemplators[entityTemplators.length -1];
-        }     
+    export const previewFeature = (isPreview: boolean): any => {
+        return (ctor: Function) => {
+          getActionTemplator(ctor.name), 'Previewxx', {value: isPreview, writable: false};
+        }
     }
 }

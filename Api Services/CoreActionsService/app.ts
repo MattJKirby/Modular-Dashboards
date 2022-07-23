@@ -13,7 +13,20 @@ server.use(express.json());
 //   console.log(res.data)
 // }
 
-console.log(ActionRegister.GetActions()[0])
+
+const test = ActionRegister.GetActions()[0]
+
+const abc = new test.ActionType
+const abc2 = new test.ActionType
+
+abc.parameters[0].Value = "asdf"
+
+
+
+
+
+console.log(test.Template)
+
 
   server.listen(0, ():void => {
     console.log(`Service: Running here 👉 https://localhost:`);
