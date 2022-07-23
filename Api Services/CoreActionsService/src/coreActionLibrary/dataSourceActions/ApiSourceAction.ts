@@ -14,7 +14,7 @@ import { Templator } from "../../Templating/Templator";
 export default class ApiSourceAction extends Action{
 
     @ActionParameterPrimitive.register(PrimitiveTypes.STRING)
-    private test: string = this.getParameter<typeof this.test>("test","");
+    private test: string = this.getParameter<typeof this.test>("test", "").Value;
 
 
     execute = (): void => {

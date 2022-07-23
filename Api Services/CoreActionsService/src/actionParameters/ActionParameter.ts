@@ -11,6 +11,17 @@ export class ActionParameter<T> implements IActionParameter{
     constructor(name: string, value: T){
         this.Name = name;
         this.Value = value;
-        this.HasValue = this.Value != null;
-    } 
+        this.HasValue = this.Value !== null;
+    }
+
+    public getParameterValue(): T {
+        return this.Value
+    }
+
+    public setParameterValue(value: T) {
+        if(typeof value !== typeof this.Value)
+            throw new Error(`Cannot assign type '${typeof value}' to type '${typeof this.Value}'`)
+        
+        this.Value = value
+    }
 }

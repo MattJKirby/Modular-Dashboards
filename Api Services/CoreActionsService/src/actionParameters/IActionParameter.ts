@@ -16,4 +16,8 @@ export type IActionParameter = {
      * Checks if the parameter has a non-null value
      */
     HasValue: boolean;
+
+    getParameterValue: () => any;
+
+    setParameterValue: (parameterValue: any) => void;
 }

@@ -8,6 +8,7 @@ export abstract class Action implements IAction{
     public parameters: IActionParameter[] = [];
 
     constructor()
+
     constructor(cloneFrom?: IAction)
     constructor(cloneFrom?: IAction){
         this.parameters = cloneFrom?.parameters !== undefined ? cloneFrom.parameters : []
@@ -17,12 +18,19 @@ export abstract class Action implements IAction{
 
     abstract clone: () => IAction;
 
-    getParameter<T> (parameterName: string, defaultValue: T): T {
-        const param = new ActionParameter<T>(parameterName,defaultValue)
-        this.parameters.push(param)
-        return param.Value
+    protected getParameter<T> (parameterName: string, defaultValue?: T): ActionParameter<T> {
+        const existingParameter = this.parameters.find(p => p.Name === parameterName);
+
+        if(existingParameter === undefined && defaultValue !== undefined)
+            this.parameters.push(new ActionParameter<T>(parameterName,defaultValue));
+        
+        return existingParameter || this.parameters[this.parameters.length -1]
 
     }
+
+   
+
+  
 
     
 }
