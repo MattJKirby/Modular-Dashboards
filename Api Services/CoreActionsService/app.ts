@@ -21,7 +21,7 @@ const abc2 = new test.ActionType
 
 
 
-console.log(abc)
+console.log(test)
 
 
 

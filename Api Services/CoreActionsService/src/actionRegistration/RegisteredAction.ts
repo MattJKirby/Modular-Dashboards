@@ -1,4 +1,3 @@
-import { ActionTemplate } from "../Templating/ActionTemplating/ActionTemplate";
 import { IActionTemplate } from "../Templating/ActionTemplating/IActionTemplate";
 
 

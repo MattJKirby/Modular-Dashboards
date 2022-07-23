@@ -18,10 +18,10 @@ export abstract class Action implements IAction{
 
     abstract clone: () => IAction;
 
-    protected getParameter<T> (parameterName: string, defaultValue?: T): ActionParameter<T> {
+    protected getParameter<T> (parameterName: string, defaultValue: T): ActionParameter<T> {
         const existingParameter = this.parameters.find(p => p.Name === parameterName);
 
-        if(existingParameter === undefined && defaultValue !== undefined)
+        if(existingParameter === undefined)
             this.parameters.push(new ActionParameter<T>(parameterName,defaultValue));
         
         return existingParameter || this.parameters[this.parameters.length -1]

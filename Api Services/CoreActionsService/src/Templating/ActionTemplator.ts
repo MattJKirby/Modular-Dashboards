@@ -5,14 +5,26 @@ import { ActionParameterTemplate } from "./ParameterTemplating/ActionParameterTe
 
 export class ActionTemplator {
     public ActionType: string;
-  
+    public DisplayName?: string;
+    public Description?: string;
+    public Preview?: boolean;
     public Parameters: EntityTemplator<ActionParameterTemplate<any>> = new EntityTemplator<ActionParameterTemplate<any>>();
 
     constructor(actionType: string){
         this.ActionType = actionType;
     }
 
+    /**
+     * Generates a new action template object, setting undefined properties as null.
+     * @returns 
+     */
     public generateActionTemplate = (): IActionTemplate => {
-        return new ActionTemplate({ActionName: this.ActionType, Parameters: this.Parameters.cloneTemplateList()})
+        return new ActionTemplate({
+            ActionName: this.ActionType, 
+            DisplayName: this.DisplayName, 
+            Description: this.Description, 
+            Preview: this.Preview, 
+            Parameters: this.Parameters.cloneTemplateList()
+        });
     }
 }

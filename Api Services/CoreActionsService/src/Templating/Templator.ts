@@ -20,15 +20,35 @@ export namespace Templator {
         
         return existingTemplator || actionTemplators[actionTemplators.length -1];
     }
+}
 
-    /**
-     * Decorator function to enable to user to specify if the action is in preview or not.
-     * @param isPreview 
-     * @returns 
-     */
-    export const previewFeature = (isPreview: boolean): any => {
-        return (ctor: Function) => {
-          getActionTemplator(ctor.name), 'Previewxx', {value: isPreview, writable: false};
-        }
+/**
+ * Decorator function to enable to user to specify if the action is in preview or not.
+ * @param isPreview 
+ * @returns 
+ */
+export const PreviewFeature = (isPreview: boolean): any => {
+    return (ctor: Function) => {
+        Templator.getActionTemplator(ctor.name).Preview = isPreview;
+    }
+}
+
+/**
+ * Decorator function to enable to user to specify a custom description.
+ * @returns 
+ */
+ export const Description = (description: string): any => {
+    return (ctor: Function) => {
+        Templator.getActionTemplator(ctor.name).Description = description;
+    }
+}
+
+/**
+ * Decorator function to enable to user to specify a custom displayName
+ * @returns 
+ */
+ export const DisplayName = (displayName: string): any => {
+    return (ctor: Function) => {
+        Templator.getActionTemplator(ctor.name).DisplayName = displayName;
     }
 }

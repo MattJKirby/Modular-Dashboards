@@ -3,18 +3,17 @@ import { ActionRegister } from "../../actionRegistration/ActionRegister"
 import { Action } from "../Action"
 import { PrimitiveTypes } from "../../Templating/ParameterTemplating/ParameterTypes/PrimitiveTypes";
 import { IAction } from "../IAction";
-import { ActionTemplator } from "../../Templating/ActionTemplator";
-import { Templator } from "../../Templating/Templator";
-
-
+import { Description, DisplayName, PreviewFeature } from "../../Templating/Templator";
 
 
 @ActionRegister.registerAction("ApiSourceAction","/apiSource")
-@Templator.previewFeature(true)
+@PreviewFeature(false)
+@Description("This is my action description")
+@DisplayName("DISPLAY NAME")
 export default class ApiSourceAction extends Action{
 
     @ActionParameterPrimitive.register(PrimitiveTypes.STRING)
-    private test: string = this.getParameter<typeof this.test>("test", "").Value;
+    private test: boolean = this.getParameter<typeof this.test>("test", false).Value;
 
 
     execute = (): void => {
